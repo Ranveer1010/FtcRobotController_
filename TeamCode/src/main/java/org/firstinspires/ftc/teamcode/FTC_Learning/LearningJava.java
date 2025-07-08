@@ -27,5 +27,20 @@ public class LearningJava extends OpMode{
         if (gamepad1.b){
             telemetry.addLine("B is pressed");
         }
+        if(gamepad1.a){
+            gamepad1.right_stick_y = gamepad1.right_stick_y/1;
+            gamepad1.right_stick_x = gamepad1.right_stick_x/1;
+        }
+        else{
+            gamepad1.right_stick_y = gamepad1.right_stick_y/2;
+            gamepad1.right_stick_x = gamepad1.right_stick_x/2;
+        }
+        //crazy mode:
+        if(gamepad1.left_bumper){
+            gamepad1.left_stick_y = gamepad1.left_stick_x;
+            gamepad1.left_stick_x = gamepad1.left_stick_y;
+            gamepad1.right_stick_x = gamepad1.right_stick_y;
+            gamepad1.right_stick_y = gamepad1.right_stick_x;
+        }
     }
 }
