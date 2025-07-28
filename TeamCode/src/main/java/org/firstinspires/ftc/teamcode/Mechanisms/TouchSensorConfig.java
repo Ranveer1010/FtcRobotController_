@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.Mechanisms;
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class MechConfig {
+public class TouchSensorConfig {
     private DigitalChannel touchSensor;
 
     public void init(HardwareMap hwMap){

@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.FTC_Learning;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.teamcode.Mechanisms.MechConfig;
+import org.firstinspires.ftc.teamcode.Mechanisms.TouchSensorConfig;
 
 @TeleOp
 public class LearningJava extends OpMode {
@@ -13,7 +13,7 @@ public class LearningJava extends OpMode {
 
     //Object creation
     RobotLocation robotLocation = new RobotLocation(0); //Sets start angle to 0
-    MechConfig mechConfig = new MechConfig();
+    TouchSensorConfig touchSensor = new TouchSensorConfig();
 
     //Get robot speed method
      void robotSpeed() {
@@ -41,7 +41,7 @@ public class LearningJava extends OpMode {
         telemetry.addLine("Hello World!");
         initDone = true;
         telemetry.addData("Init done = ", initDone);
-        mechConfig.init(hardwareMap); //Init hwMap
+        touchSensor.init(hardwareMap); //Init hwMap
     }
 
     @Override
@@ -58,11 +58,11 @@ public class LearningJava extends OpMode {
         triggersAdded();
 
         String touchSensorPressed = "Not pressed";
-        if(mechConfig.isTouchSensorPressed()){
+        if(touchSensor.isTouchSensorPressed()){
             touchSensorPressed = "Pressed";
         }
 
-        telemetry.addData("Touch sensor " , mechConfig.isTouchSensorPressed());
+        telemetry.addData("Touch sensor " , touchSensor.isTouchSensorPressed());
 
         telemetry.addData("Right stick X GP1 = ", gamepad1.right_stick_x);
         telemetry.addData("Right stick Y GP1 = ", gamepad1.right_stick_y);
