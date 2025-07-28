@@ -2,15 +2,21 @@ package org.firstinspires.ftc.teamcode.FTC_Learning;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import org.firstinspires.ftc.teamcode.Mechanisms.MechConfig;
 
 @TeleOp
 public class LearningJava extends OpMode {
 
+    //Var creation
     int gradeForGradeSeven = 98;
     boolean initDone;
-    RobotLocation robotLocation = new RobotLocation(0);
 
-    void robotSpeed() {
+    //Object creation
+    RobotLocation robotLocation = new RobotLocation(0); //Sets start angle to 0
+    MechConfig mechConfig = new MechConfig();
+
+    //Get robot speed method
+     void robotSpeed() {
         if (gamepad1.a) {
             double turtleInput = gamepad1.left_stick_y / -2.0;
             telemetry.addLine("Turtle active");
@@ -22,6 +28,7 @@ public class LearningJava extends OpMode {
         }
     }
 
+    //Trigger addition method
     void triggersAdded() {
         double trigger1 = gamepad1.left_trigger;
         double trigger2 = gamepad1.right_trigger;
@@ -34,21 +41,28 @@ public class LearningJava extends OpMode {
         telemetry.addLine("Hello World!");
         initDone = true;
         telemetry.addData("Init done = ", initDone);
+        mechConfig.init(hardwareMap); //Init hwMap
     }
 
     @Override
     public void start() {
         telemetry.addLine("Starting Opmode");
         telemetry.addData("Your Grade Is: ", gradeForGradeSeven);
-
-        // Set angle once at start
-        robotLocation.setAngle(90);
+        robotLocation.setAngle(90); //Sets angle to 90 at start
     }
 
     @Override
     public void loop() {
+
         robotSpeed();
         triggersAdded();
+
+        String touchSensorPressed = "Not pressed";
+        if(mechConfig.isTouchSensorPressed()){
+            touchSensorPressed = "Pressed";
+        }
+
+        telemetry.addData("Touch sensor " , mechConfig.isTouchSensorPressed());
 
         telemetry.addData("Right stick X GP1 = ", gamepad1.right_stick_x);
         telemetry.addData("Right stick Y GP1 = ", gamepad1.right_stick_y);
@@ -58,19 +72,15 @@ public class LearningJava extends OpMode {
             telemetry.addLine("B is pressed");
         }
 
-        // Turn the robot by 30 degrees only when X button is pressed
         if (gamepad1.x) {
             robotLocation.turn(30);
         }
 
-        // Update heading variables after possible turn
         double getRobotHeading = robotLocation.getHeading();
         double getRobotAngle = robotLocation.getAngle();
-
         telemetry.addData("Heading (normalized)", getRobotHeading);
         telemetry.addData("Raw angle", getRobotAngle);
 
-        // Update X/Y based on dpad presses
         if (gamepad1.dpad_left) {
             robotLocation.changeX(0.1);
         }
