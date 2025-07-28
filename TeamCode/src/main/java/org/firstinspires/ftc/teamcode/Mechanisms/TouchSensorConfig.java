@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Mechanisms;
+/*package org.firstinspires.ftc.teamcode.Mechanisms;
 
 import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -17,3 +17,4 @@ public class TouchSensorConfig {
         return false;
     }
 }
+*/
