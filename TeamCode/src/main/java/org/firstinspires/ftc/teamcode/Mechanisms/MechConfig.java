@@ -11,7 +11,7 @@ public class MechConfig {
         touchSensor.setMode(DigitalChannel.Mode.INPUT); //sets the touch sensor as an input
     }
     public boolean isTouchSensorPressed(){
-        if(!touchSensor){
+        if(!touchSensor.getState()){
             return true;
         }
         return false;
