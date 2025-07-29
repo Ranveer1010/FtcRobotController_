@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.FTC_Learning;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-//import org.firstinspires.ftc.teamcode.Mechanisms.TouchSensorConfig;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.teamcode.Mechanisms.Config;
 
 @TeleOp
 public class LearningJava extends OpMode {
@@ -13,7 +15,7 @@ public class LearningJava extends OpMode {
 
     //Object creation
     RobotLocation robotLocation = new RobotLocation(0); //Sets start angle to 0
-    //TouchSensorConfig touchSensor = new TouchSensorConfig();
+    Config config = new Config();
 
     //Get robot speed method
      void robotSpeed() {
@@ -25,6 +27,27 @@ public class LearningJava extends OpMode {
             telemetry.addLine("Turtle not active robot at normal speed");
             double speed = -1.0 * gamepad1.left_stick_y;
             telemetry.addData("Bot speed is: ", speed);
+        }
+    }
+
+    //Drive method
+    void forwardDrive(){
+        if(gamepad1.a){
+            config.setRightFront(gamepad1.left_stick_y);
+            config.setRightBack(gamepad1.left_stick_y);
+            config.setLeftFront(gamepad1.left_stick_y);
+            config.setLeftBack(gamepad1.left_stick_y);
+        }
+        else{
+            config.setRightFront(0.0);
+            config.setRightBack(0.0);
+            config.setLeftFront(0.0);
+            config.setLeftBack(0.0);
+        }
+    }
+    void slideControl() {
+        if (gamepad1.right_stick_y > 0) {
+            config.setSlideExtend(-gamepad1.right_stick_y / 2.5);
         }
     }
 
@@ -41,7 +64,8 @@ public class LearningJava extends OpMode {
         telemetry.addLine("Hello World!");
         initDone = true;
         telemetry.addData("Init done = ", initDone);
-        //touchSensor.init(hardwareMap); //Init hwMap
+        config.init(hardwareMap);
+
     }
 
     @Override
@@ -56,6 +80,8 @@ public class LearningJava extends OpMode {
 
         robotSpeed();
         triggersAdded();
+        forwardDrive();
+        slideControl();
 
         /*String touchSensorPressed = "Not pressed";
         if(touchSensor.isTouchSensorPressed()){
@@ -96,5 +122,8 @@ public class LearningJava extends OpMode {
 
         telemetry.addData("X position", robotLocation.getX());
         telemetry.addData("Y position", robotLocation.getY());
+        telemetry.addData("RF rotations are: " , config.getRightFrontMotorRotations());
+
+        telemetry.update();
     }
 }

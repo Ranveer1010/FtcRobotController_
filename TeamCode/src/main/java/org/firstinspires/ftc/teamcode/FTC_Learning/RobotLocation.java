@@ -27,7 +27,6 @@ package org.firstinspires.ftc.teamcode.FTC_Learning;  public class RobotLocation
         return "RobotLocation: angle (" + angle + ")";
     }
 
-
     public void turn(double angleChange) {
         angle += angleChange;
     }
