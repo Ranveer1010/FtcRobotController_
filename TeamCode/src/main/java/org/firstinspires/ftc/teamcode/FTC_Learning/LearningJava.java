@@ -41,8 +41,8 @@ public class LearningJava extends OpMode {
     }
 
     void slideControl() {
-        if (gamepad1.b) {
-            config.setSlideExtend(gamepad1.right_stick_y / 2.5);
+        if (gamepad2.b) {
+            config.setSlideExtend(gamepad2.right_stick_y / 2.5);
         }
         else{
             config.setSlideExtend(0.0);
@@ -51,24 +51,16 @@ public class LearningJava extends OpMode {
 
     void driveForward(){
         if (gamepad1.a) {
-            // Show on telemetry that button A is being held
-            telemetry.addLine("A is running new new new new");
-
             // Get average encoder position of left side motors
             int leftPos = (config.getLeftFront().getCurrentPosition() + config.getLeftBack().getCurrentPosition()) / 2;
-
             // Get average encoder position of right side motors
             int rightPos = (config.getRightFront().getCurrentPosition() + config.getRightBack().getCurrentPosition()) / 2;
-
             // Calculate the error (difference) between left and right side
             int error = leftPos - rightPos;
-
             // Apply a correction factor to reduce drifting/curving
             double correction = error * 0.001;  // You can tune this value
-
             // Get forward/backward input from joystick (negative to correct direction)
             double basePower = gamepad1.left_stick_y;
-
             // Adjust motor power to keep the bot driving straight
             config.setAllDrivePower(basePower - correction, basePower + correction);
         } else {
@@ -117,7 +109,8 @@ public class LearningJava extends OpMode {
         driveForward();
         slideControl();
 
-        if(gamepad1.left_bumper){
+        if(gamepad2.left_bumper){
+            telemetry.addLine("GP2 left bumper is preseed");
             config.setPivot(134 , 0.5);
         }
 
@@ -132,7 +125,7 @@ public class LearningJava extends OpMode {
         telemetry.addData("Right stick Y GP1 = ", gamepad1.right_stick_y);
         telemetry.addData("Diff between GP1 left and right joystick y is ", gamepad1.left_stick_y - gamepad1.right_stick_y);
 
-        if(gamepad1.right_stick_button){
+        if(gamepad1.back){
             config.setZeroPower(DcMotor.ZeroPowerBehavior.BRAKE);
         }
 
