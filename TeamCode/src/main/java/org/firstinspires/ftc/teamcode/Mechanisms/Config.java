@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Mechanisms;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 public class Config {
     private DcMotor rightFront;
@@ -13,6 +14,10 @@ public class Config {
     private DcMotor slideExtend;
     private double ticksPerRotation;
 
+    private Servo clawRotateServo;
+    private Servo clawPinch;
+    private Servo clawRotate2;
+
     public void init(HardwareMap hwMap){
         rightFront = hwMap.get(DcMotor.class , "right_front");
         rightBack = hwMap.get(DcMotor.class , "right_back");
@@ -20,6 +25,10 @@ public class Config {
         leftBack = hwMap.get(DcMotor.class , "left_back");
         pivot = hwMap.get(DcMotor.class , "pivot");
         slideExtend = hwMap.get(DcMotor.class , "slide_extend");
+
+        clawRotateServo = hwMap.get(Servo.class , "claw_rotate_servo");
+        clawPinch = hwMap.get(Servo.class , "pinch");
+        clawRotate2 = hwMap.get(Servo.class , "claw_rotate_2");
 
         rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -34,6 +43,16 @@ public class Config {
         rightBack.setDirection(DcMotor.Direction.FORWARD);
 
         ticksPerRotation = rightFront.getMotorType().getTicksPerRev();
+    }
+
+    public void setRotationPos(double pos){
+        clawRotateServo.setPosition(pos);
+    }
+    public void setClaw2(double pos){
+        clawRotate2.setPosition(pos);
+    }
+    public void setClaw(double pos){
+        clawPinch.setPosition(pos);
     }
 
     public void setZeroPower(DcMotor.ZeroPowerBehavior zeroPowerBehavior){

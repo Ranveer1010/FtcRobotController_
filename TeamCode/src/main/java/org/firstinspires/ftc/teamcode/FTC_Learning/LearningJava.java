@@ -111,7 +111,7 @@ public class LearningJava extends OpMode {
 
         if(gamepad2.left_bumper){
             telemetry.addLine("GP2 left bumper is preseed");
-            config.setPivot(134 , 0.5);
+            config.setPivot(168 , 50.0);
         }
 
         /*String touchSensorPressed = "Not pressed";
@@ -149,6 +149,10 @@ public class LearningJava extends OpMode {
         }
         if (gamepad1.dpad_down) {
             robotLocation.changeY(-0.1);
+        }
+
+        if(gamepad2.b){
+            config.setRotationPos(0.5);
         }
 
         telemetry.addData("X position", robotLocation.getX());
