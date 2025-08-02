@@ -69,10 +69,8 @@ public class Config {
         rightBack.setPower(rightPower);
     }
 
-    public void setPivot(int pos, double power){
-        pivot.setTargetPosition(pos);
-        pivot.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        pivot.setPower(power);
+    public void setPivot(double speed){
+        pivot.setPower(speed);
     }
 
     public void setSlideExtend(double speed){

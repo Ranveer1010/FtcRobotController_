@@ -41,7 +41,7 @@ public class LearningJava extends OpMode {
     }
 
     void slideControl() {
-        if (gamepad2.b) {
+        if (gamepad2.dpad_up) {
             config.setSlideExtend(gamepad2.right_stick_y / 2.5);
         }
         else{
@@ -109,9 +109,9 @@ public class LearningJava extends OpMode {
         driveForward();
         slideControl();
 
-        if(gamepad2.left_bumper){
+        if(gamepad2.dpad_down){
             telemetry.addLine("GP2 left bumper is preseed");
-            config.setPivot(168 , 50.0);
+            config.setPivot(gamepad2.left_stick_y);
         }
 
         /*String touchSensorPressed = "Not pressed";
@@ -153,8 +153,25 @@ public class LearningJava extends OpMode {
 
         if(gamepad2.b){
             config.setRotationPos(0.5);
+            telemetry.addLine("GP2 B");
         }
-
+        if(gamepad2.a){
+            config.setRotationPos(1.0);
+            telemetry.addLine("GP2 A");
+        }
+        if(gamepad2.x){
+            config.setClaw(0.0);
+            telemetry.addLine("GP2 X");
+        }
+        else{
+            config.setClaw(1.0);
+            telemetry.addLine("GP2 B not pressed");
+        }
+        if(gamepad2.y){
+            config.setClaw2(gamepad2.right_trigger);
+            telemetry.addLine("GP2 Y");
+            telemetry.addData("GP2 Trigger is: " , gamepad2.right_trigger);
+        }
         telemetry.addData("X position", robotLocation.getX());
         telemetry.addData("Y position", robotLocation.getY());
         telemetry.addData("RF rotations are: " , config.getRightFrontMotorRotations());
