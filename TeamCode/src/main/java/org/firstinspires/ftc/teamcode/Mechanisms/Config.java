@@ -46,13 +46,13 @@ public class Config {
         ticksPerRotation = rightFront.getMotorType().getTicksPerRev();
     }
 
-    public void setRotationPos(double pos){
+    public void setRotationPos(double pos){ //horizontal/turn
         clawRotateServo.setPosition(pos);
     }
     public void setClaw2(double pos){
         clawRotate2.setPosition(pos);
     }
-    public void setClaw(double pos){
+    public void setClaw(double pos){ //vertical
         clawPinch.setPosition(pos);
     }
 

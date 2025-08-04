@@ -107,7 +107,6 @@ public class LearningJava extends OpMode {
         driveForward();
         slideControl();
 
-        telemetry.addLine("GP2 left bumper is preseed");
         config.setPivot(gamepad2.left_stick_y);
 
         telemetry.addData("Right stick X GP1 = ", gamepad1.right_stick_x);
@@ -141,24 +140,21 @@ public class LearningJava extends OpMode {
         }
 
         if(gamepad2.b){
-            config.setRotationPos(0.5);
+            config.setClaw(0.1);
             telemetry.addLine("GP2 B");
         }
         if(gamepad2.a){
-            config.setRotationPos(1.0);
+            config.setRotationPos(0.1);
             telemetry.addLine("GP2 A");
         }
-        if(gamepad2.x){
-            config.setClaw(0.0);
+        if(gamepad2.left_bumper){
+            config.setClaw2(0.0);
             telemetry.addLine("GP2 X");
         }
-        else{
-            config.setClaw(1.0);
-            telemetry.addLine("GP2 B not pressed");
+        if(gamepad2.right_bumper){
+            config.setClaw2(0.1);
         }
-        config.setClaw2(gamepad2.right_trigger);
-        telemetry.addLine("GP2 Y");
-        telemetry.addData("GP2 Trigger is: " , gamepad2.right_trigger);
+        config.setClaw(gamepad2.right_trigger);
 
         telemetry.addData("X position", robotLocation.getX());
         telemetry.addData("Y position", robotLocation.getY());
