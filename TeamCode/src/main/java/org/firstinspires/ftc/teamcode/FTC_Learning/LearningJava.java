@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Mechanisms.Config;
 
 @TeleOp
@@ -27,21 +28,9 @@ public class LearningJava extends OpMode {
         return output;
     }
 
-    //Get robot speed method
-     void robotSpeed() {
-        if (gamepad1.left_stick_button) {
-            double turtleInput = gamepad1.left_stick_y / -2.0;
-            telemetry.addLine("Turtle active");
-            telemetry.addData("Turtle speed is: ", turtleInput);
-        } else {
-            telemetry.addLine("Turtle not active robot at normal speed");
-            double speed = -1.0 * gamepad1.left_stick_y;
-            telemetry.addData("Bot speed is: ", speed);
-        }
-    }
-
     void slideControl() {
-        if (gamepad2.dpad_up) {
+        if (gamepad2.b) {
+            gamepad2.rumble(100);
             config.setSlideExtend(gamepad2.right_stick_y / 2.5);
         }
         else{
@@ -49,8 +38,9 @@ public class LearningJava extends OpMode {
         }
     }
 
-    void driveForward(){
+    void driveForward(){ //drive method
         if (gamepad1.a) {
+            gamepad1.rumble(100);
             // Get average encoder position of left side motors
             int leftPos = (config.getLeftFront().getCurrentPosition() + config.getLeftBack().getCurrentPosition()) / 2;
             // Get average encoder position of right side motors
@@ -70,8 +60,6 @@ public class LearningJava extends OpMode {
 
     }
 
-
-
     //Trigger addition method
     void triggersAdded() {
         double trigger1 = gamepad1.left_trigger;
@@ -79,6 +67,9 @@ public class LearningJava extends OpMode {
         double triggersTogether = trigger1 + trigger2;
         telemetry.addData("Triggers added is: ", triggersTogether);
     }
+
+    double imuOffSet = 90.0;
+    double imuHeadingDegrees = config.getHeading(AngleUnit.DEGREES) + imuOffSet;
 
     @Override
     public void init() {
@@ -89,7 +80,6 @@ public class LearningJava extends OpMode {
         config.getPivot().setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
-
     @Override
     public void start() {
         telemetry.addLine("Starting Opmode");
@@ -100,22 +90,52 @@ public class LearningJava extends OpMode {
     @Override
     public void loop() {
 
+        telemetry.addData("Yaw is" , imuHeadingDegrees);
+
         speed = gamepad1.left_stick_y * -1.0;
 
-        robotSpeed();
         triggersAdded();
         driveForward();
         slideControl();
 
-        config.setPivot(gamepad2.left_stick_y);
-
-        telemetry.addData("Right stick X GP1 = ", gamepad1.right_stick_x);
-        telemetry.addData("Right stick Y GP1 = ", gamepad1.right_stick_y);
-        telemetry.addData("Diff between GP1 left and right joystick y is ", gamepad1.left_stick_y - gamepad1.right_stick_y);
-
         if(gamepad1.back){
             config.setZeroPower(DcMotor.ZeroPowerBehavior.BRAKE);
         }
+
+        config.setPivot(gamepad2.left_stick_y);
+
+        if(gamepad2.a){
+            config.setRotationPos(0.1);
+            gamepad2.rumbleBlips(1);
+        }
+        else{
+            config.setRotationPos(0.0);
+        }
+        if(gamepad2.y){
+            config.setRotationPos(0.5);
+        }
+        if(gamepad2.right_bumper){
+            config.setPinchOpen();
+            gamepad2.rumbleBlips(1);
+        }
+        if(gamepad2.left_bumper){
+            config.setPinchClose();
+            telemetry.addLine("pinchClose");
+            gamepad2.rumbleBlips(1);
+        }
+        if(gamepad2.dpad_up) {
+            config.setClaw(0.0);
+            gamepad2.rumbleBlips(1);
+        }
+        if(gamepad2.dpad_left){
+            config.setClaw(1.0);
+            gamepad2.rumbleBlips(1);
+        }
+        if(gamepad2.dpad_down){
+            config.setClaw(0.5);
+        }
+        telemetry.addData("Claw is" , config.clawVerticalPos());
+
 
         if (gamepad1.x) {
             robotLocation.turn(30);
@@ -138,23 +158,6 @@ public class LearningJava extends OpMode {
         if (gamepad1.dpad_down) {
             robotLocation.changeY(-0.1);
         }
-
-        if(gamepad2.b){
-            config.setClaw(0.1);
-            telemetry.addLine("GP2 B");
-        }
-        if(gamepad2.a){
-            config.setRotationPos(0.1);
-            telemetry.addLine("GP2 A");
-        }
-        if(gamepad2.left_bumper){
-            config.setClaw2(0.0);
-            telemetry.addLine("GP2 X");
-        }
-        if(gamepad2.right_bumper){
-            config.setClaw2(0.1);
-        }
-        config.setClaw(gamepad2.right_trigger);
 
         telemetry.addData("X position", robotLocation.getX());
         telemetry.addData("Y position", robotLocation.getY());
