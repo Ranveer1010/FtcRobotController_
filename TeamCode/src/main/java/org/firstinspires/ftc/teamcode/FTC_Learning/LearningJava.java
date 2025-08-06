@@ -68,7 +68,7 @@ public class LearningJava extends OpMode {
         telemetry.addData("Triggers added is: ", triggersTogether);
     }
 
-    double imuOffSet = 90.0;
+    double imuOffSet = 0.0;
     double imuHeadingDegrees = config.getHeading(AngleUnit.DEGREES) + imuOffSet;
 
     @Override

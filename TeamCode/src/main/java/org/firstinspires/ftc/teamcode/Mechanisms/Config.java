@@ -50,8 +50,8 @@ public class Config {
 
         imu = hwMap.get(IMU.class , "imu");
         RevHubOrientationOnRobot RevOrientation =
-                new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.RIGHT ,
-                        RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD);
+                new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.LEFT ,
+                        RevHubOrientationOnRobot.UsbFacingDirection.UP);
 
         imu.initialize(new IMU.Parameters(RevOrientation));
 
