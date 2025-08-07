@@ -59,19 +59,46 @@ public class LearningJava extends OpMode {
         }
 
     }
-
+    int state = 0;
+    public void stateMethod() {
+        switch (state) {
+            case 0:
+                if (getRuntime() <= 2.5) {
+                    config.setAllDrivePower(0.25, 0.25);
+                }else{
+                    state = 1;
+                }
+                break;
+            case 1:
+                if (getRuntime() <= 5) {
+                    config.setAllDrivePower(0.5, 0.5);
+                }else{
+                    state = 2;
+                }
+                break;
+            case 2:
+                if (getRuntime() <= 7.5) {
+                    config.setAllDrivePower(1.0, 1.0);
+                }
+                break;
+            default:
+                if (gamepad1.right_stick_button) {
+                    config.setAllDrivePower(0.0, 0.0);
+                }
+                else{
+                    config.setAllDrivePower(1.0,1.0);
+                }
+        }
+    }
     //Trigger addition method
-    void triggersAdded() {
+    void triggersAdded(){
         double trigger1 = gamepad1.left_trigger;
         double trigger2 = gamepad1.right_trigger;
         double triggersTogether = trigger1 + trigger2;
         telemetry.addData("Triggers added is: ", triggersTogether);
     }
 
-    double imuOffSet = 0.0;
-    double imuHeadingDegrees = config.getHeading(AngleUnit.DEGREES) + imuOffSet;
-
-    @Override
+        @Override
     public void init() {
         telemetry.addLine("Hello World!");
         initDone = true;
@@ -90,6 +117,10 @@ public class LearningJava extends OpMode {
     @Override
     public void loop() {
 
+        double imuOffSet = 0.0;
+        double imuHeadingDegrees = config.getHeading(AngleUnit.DEGREES) + imuOffSet;
+
+
         telemetry.addData("Yaw is" , imuHeadingDegrees);
 
         speed = gamepad1.left_stick_y * -1.0;
@@ -97,6 +128,10 @@ public class LearningJava extends OpMode {
         triggersAdded();
         driveForward();
         slideControl();
+
+        if(gamepad1.left_stick_button){
+            stateMethod();
+        }
 
         if(gamepad1.back){
             config.setZeroPower(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -162,6 +197,7 @@ public class LearningJava extends OpMode {
         telemetry.addData("X position", robotLocation.getX());
         telemetry.addData("Y position", robotLocation.getY());
         telemetry.addData("RF rotations are: " , config.getRightFrontMotorRotations());
+        telemetry.addData("Runtime is: " , getRuntime());
 
         telemetry.update();
     }
