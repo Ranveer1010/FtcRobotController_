@@ -23,7 +23,6 @@ public class Config {
 
     private IMU imu;
 
-
     public void init(HardwareMap hwMap){
         rightFront = hwMap.get(DcMotor.class , "right_front");
         rightBack = hwMap.get(DcMotor.class , "right_back");

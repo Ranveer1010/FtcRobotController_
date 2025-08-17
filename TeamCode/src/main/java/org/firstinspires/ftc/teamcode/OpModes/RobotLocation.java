@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.FTC_Learning;  public class RobotLocation {  // Start of the RobotLocation class
+package org.firstinspires.ftc.teamcode.OpModes;  public class RobotLocation {  // Start of the RobotLocation class
 
     double angle;// Stores the current heading (angle in degrees)
     private double x = 0;

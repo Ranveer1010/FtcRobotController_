@@ -1,9 +1,8 @@
-package org.firstinspires.ftc.teamcode.FTC_Learning;
+package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Mechanisms.Config;
@@ -11,8 +10,6 @@ import org.firstinspires.ftc.teamcode.Mechanisms.Config;
 @TeleOp
 public class LearningJava extends OpMode {
 
-    //Var creation
-    int gradeForGradeSeven = 98;
     boolean initDone;
     double speed;
 
@@ -98,7 +95,7 @@ public class LearningJava extends OpMode {
         telemetry.addData("Triggers added is: ", triggersTogether);
     }
 
-        @Override
+    @Override
     public void init() {
         telemetry.addLine("Hello World!");
         initDone = true;
@@ -110,7 +107,6 @@ public class LearningJava extends OpMode {
     @Override
     public void start() {
         telemetry.addLine("Starting Opmode");
-        telemetry.addData("Your Grade Is: ", gradeForGradeSeven);
         robotLocation.setAngle(90); //Sets angle to 90 at start
     }
 
@@ -155,7 +151,6 @@ public class LearningJava extends OpMode {
         }
         if(gamepad2.left_bumper){
             config.setPinchClose();
-            telemetry.addLine("pinchClose");
             gamepad2.rumbleBlips(1);
         }
         if(gamepad2.dpad_up) {
