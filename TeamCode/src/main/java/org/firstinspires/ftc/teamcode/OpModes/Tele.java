@@ -8,7 +8,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Mechanisms.Config;
 
 @TeleOp
-public class LearningJava extends OpMode {
+public class Tele extends OpMode {
 
     boolean initDone;
     double speed;
