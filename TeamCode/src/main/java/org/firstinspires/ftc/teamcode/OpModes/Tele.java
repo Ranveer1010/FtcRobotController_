@@ -134,17 +134,13 @@ public class Tele extends OpMode {
         }
 
         config.setPivot(gamepad2.left_stick_y);
+    if(gamepad2.left_trigger > 0) {
+        config.setRotationPos(gamepad2.left_trigger);
+    }
+    if(gamepad2.right_trigger > 0){
+        config.setRotationPos(-gamepad2.right_trigger);
+    }
 
-        if(gamepad2.a){
-            config.setRotationPos(0.1);
-            gamepad2.rumbleBlips(1);
-        }
-        else{
-            config.setRotationPos(0.0);
-        }
-        if(gamepad2.y){
-            config.setRotationPos(0.5);
-        }
         if(gamepad2.right_bumper){
             config.setPinchOpen();
             gamepad2.rumbleBlips(1);

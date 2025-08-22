@@ -90,6 +90,9 @@ public class Config {
         rightFront.setPower(rightPower);
         rightBack.setPower(rightPower);
     }
+    public double getClawUpDownPos(){
+        return clawRotateServo.getPosition();
+    }
 
     public void setPivot(double speed){
         pivot.setPower(speed);
