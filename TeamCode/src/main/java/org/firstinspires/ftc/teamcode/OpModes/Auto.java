@@ -29,7 +29,7 @@ public class Auto extends LinearOpMode {
 
         ElapsedTime timer = new ElapsedTime();
 
-
+        telemetry.addLine("Init done");
         waitForStart();
         timer.reset();
 
@@ -68,7 +68,6 @@ public class Auto extends LinearOpMode {
                 }
             }
             telemetry.update();
-            sleep(1000);
         }
     }
 }

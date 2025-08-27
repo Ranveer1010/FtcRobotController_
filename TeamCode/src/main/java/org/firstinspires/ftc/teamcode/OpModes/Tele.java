@@ -97,10 +97,8 @@ public class Tele extends OpMode {
     }
 
     public void mechDrive(){
-
         config.getRightFront().setPower(this.gamepad1.left_stick_y+this.gamepad1.right_stick_x+this.gamepad1.left_stick_x);
         config.getRightBack().setPower(this.gamepad1.left_stick_y-this.gamepad1.right_stick_x+this.gamepad1.left_stick_x);
-
         config.getLeftFront().setPower(this.gamepad1.left_stick_y-this.gamepad1.right_stick_x-this.gamepad1.left_stick_x);
         config.getLeftBack().setPower(this.gamepad1.left_stick_y+this.gamepad1.right_stick_x-this.gamepad1.left_stick_x);
     }
