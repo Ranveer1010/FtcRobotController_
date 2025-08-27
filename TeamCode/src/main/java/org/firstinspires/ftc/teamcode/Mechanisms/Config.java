@@ -64,7 +64,7 @@ public class Config {
     public double clawVerticalPos(){
         return clawVertical.getPosition();
     }
-    public void setRotationPos(double pos){ //horizontal/turn
+    public void setRotationPos(double pos){
         clawRotateServo.setPosition(pos);
     }
     public void setPinchOpen(){ //pinch
@@ -75,13 +75,6 @@ public class Config {
     }
     public void setClaw(double pos){ //vertical
         clawVertical.setPosition(pos);
-    }
-
-    public void setZeroPower(DcMotor.ZeroPowerBehavior zeroPowerBehavior){
-        rightFront.setZeroPowerBehavior(zeroPowerBehavior);
-        rightBack.setZeroPowerBehavior(zeroPowerBehavior);
-        leftFront.setZeroPowerBehavior(zeroPowerBehavior);
-        leftBack.setZeroPowerBehavior(zeroPowerBehavior);
     }
 
     public void setAllDrivePower(double leftPower, double rightPower) {

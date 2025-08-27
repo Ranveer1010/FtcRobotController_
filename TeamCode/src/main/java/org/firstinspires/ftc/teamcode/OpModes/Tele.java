@@ -60,14 +60,14 @@ public class Tele extends OpMode {
     public void stateMethod() {
         switch (state) {
             case 0:
-                if (getRuntime() <= 2.5) {
-                    config.setAllDrivePower(0.25, 0.25);
+                if (gamepad2.right_trigger > 0.1 && gamepad2.right_trigger < 0.25) {
+                    config.getPivot().setPower(0.1);
                 }else{
                     state = 1;
                 }
                 break;
             case 1:
-                if (getRuntime() <= 5) {
+                if (gamepad2.right_trigger < 0) {
                     config.setAllDrivePower(0.5, 0.5);
                 }else{
                     state = 2;
@@ -93,6 +93,16 @@ public class Tele extends OpMode {
         double trigger2 = gamepad1.right_trigger;
         double triggersTogether = trigger1 + trigger2;
         telemetry.addData("Triggers added is: ", triggersTogether);
+
+    }
+
+    public void mechDrive(){
+
+        config.getRightFront().setPower(this.gamepad1.left_stick_y+this.gamepad1.right_stick_x+this.gamepad1.left_stick_x);
+        config.getRightBack().setPower(this.gamepad1.left_stick_y-this.gamepad1.right_stick_x+this.gamepad1.left_stick_x);
+
+        config.getLeftFront().setPower(this.gamepad1.left_stick_y-this.gamepad1.right_stick_x-this.gamepad1.left_stick_x);
+        config.getLeftBack().setPower(this.gamepad1.left_stick_y+this.gamepad1.right_stick_x-this.gamepad1.left_stick_x);
     }
 
     @Override
@@ -122,23 +132,18 @@ public class Tele extends OpMode {
         speed = gamepad1.left_stick_y * -1.0;
 
         triggersAdded();
-        driveForward();
+        mechDrive();
         slideControl();
 
         if(gamepad1.left_stick_button){
-            stateMethod();
+            //stateMethod();
         }
 
-        if(gamepad1.back){
-            config.setZeroPower(DcMotor.ZeroPowerBehavior.BRAKE);
-        }
-
-        config.setPivot(gamepad2.left_stick_y);
-    if(gamepad2.left_trigger > 0) {
-        config.setRotationPos(gamepad2.left_trigger);
+    if(gamepad2.x) {
+        config.setRotationPos(-1.0);
     }
-    if(gamepad2.right_trigger > 0){
-        config.setRotationPos(-gamepad2.right_trigger);
+    if(gamepad2.b){
+        config.setRotationPos(-0.75);
     }
 
         if(gamepad2.right_bumper){

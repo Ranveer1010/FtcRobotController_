@@ -42,35 +42,34 @@ public class Auto extends LinearOpMode {
                 VisionPortal.easyCreateWithDefaults(camera, aprilTagProcessor);
 
         while (!isStopRequested() && opModeIsActive()) {
-            if(timer.time() < 1) {
+            if (timer.time() < 1) {
                 config.setAllDrivePower(-0.1, -0.1);
-            }else if(timer.time() < 3){
-                config.setAllDrivePower(0.0,0.0);
-            }else{
+            } else if (timer.time() < 3) {
+                config.setAllDrivePower(0.0, 0.0);
+            } else if (timer.time() > 3 && timer.time() < 10) {
                 List<AprilTagDetection> detections = aprilTagProcessor.getDetections();
-                    config.setAllDrivePower(-0.05, 0.05);
+                if (!detections.isEmpty()) {
+                    int id = detections.get(0).id;
+                    AprilTagPoseFtc tagPose = detections.get(0).ftcPose;
+                    telemetry.addData("Id ", id);
+                    telemetry.addData("Yaw ", tagPose.yaw);
+                    telemetry.addData("Roll ", tagPose.roll);
+                    telemetry.addData("Pitch ", tagPose.pitch);
+                    telemetry.addData("Bearing ", tagPose.bearing);
+                    telemetry.addData("Distance ", tagPose.range);
 
-                    if (!detections.isEmpty()) {
-                        int id = detections.get(0).id;
-                        AprilTagPoseFtc tagPose = detections.get(0).ftcPose;
-                        telemetry.addData("Id ", id);
-                        telemetry.addData("Yaw ", tagPose.yaw);
-                        telemetry.addData("Roll ", tagPose.roll);
-                        telemetry.addData("Pitch ", tagPose.pitch);
-                        telemetry.addData("Bearing ", tagPose.bearing);
-                        telemetry.addData("Distance ", tagPose.range);
-
-                        if (detections.get(0).ftcPose.bearing < 2) {
-                            config.setAllDrivePower(0.0, 0.0);
-                        }else{
-                            telemetry.addLine("No tags found, turn continuing");
-                            config.setAllDrivePower(-0.05,0.05);
-                        }
+                    if (Math.abs(detections.get(0).ftcPose.bearing) < 2) {
+                        config.setAllDrivePower(0.0, 0.0);
+                    } else {
+                        config.setAllDrivePower(-0.05, 0.05);
                     }
+                }else{
+                    config.setAllDrivePower(-0.05,0.05);
                 }
             }
             telemetry.update();
-            sleep(50);
+            sleep(1000);
         }
     }
+}
 
